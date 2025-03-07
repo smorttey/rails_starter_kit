@@ -79,10 +79,10 @@ cmd_deps() {
   echo "Installing dependencies..."
   bundle install
   
-  # Install yarn dependencies if package.json exists
+  # Install npm dependencies if package.json exists
   if [ -f package.json ]; then
-    echo "Installing yarn packages..."
-    yarn install
+    echo "Installing npm packages..."
+    npm install
   fi
 }
 
