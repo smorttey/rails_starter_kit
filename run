@@ -1,0 +1,137 @@
+#!/bin/bash
+
+# Run script for Rails Starter Kit
+# Provides convenient commands for working with the application
+
+set -e
+
+# Help text
+show_help() {
+  echo "Rails Starter Kit - Development Commands"
+  echo "Usage: ./run [command]"
+  echo ""
+  echo "Available commands:"
+  echo "  server      - Start the Rails server and Tailwind compiler"
+  echo "  console     - Start the Rails console"
+  echo "  test        - Run the test suite (RSpec)"
+  echo "  lint        - Run Rubocop linting"
+  echo "  db:reset    - Reset the database (drop, create, migrate, seed)"
+  echo "  db:migrate  - Run database migrations"
+  echo "  db:seed     - Seed the database"
+  echo "  deps        - Install all dependencies (bundle, yarn)"
+  echo "  routes      - List all routes"
+  echo "  help        - Show this help message"
+  echo ""
+}
+
+# Command functions
+cmd_server() {
+  echo "Starting Rails server and Tailwind compiler..."
+  
+  # Check if Foreman is installed
+  if gem list -i foreman > /dev/null 2>&1; then
+    # Check if Procfile.dev exists
+    if [ ! -f "Procfile.dev" ]; then
+      echo "Creating Procfile.dev..."
+      echo "web: bin/rails server -p 3000" > Procfile.dev
+      echo "css: bin/rails tailwindcss:watch" >> Procfile.dev
+    fi
+    foreman start -f Procfile.dev
+  else
+    echo "Foreman not found. Starting with multiple terminals required."
+    echo "Run 'bundle exec rails tailwindcss:watch' in one terminal"
+    echo "And 'bundle exec rails server' in another terminal"
+    bundle exec rails server
+  fi
+}
+
+cmd_console() {
+  echo "Starting Rails console..."
+  bundle exec rails console
+}
+
+cmd_test() {
+  echo "Running test suite..."
+  bundle exec rspec "$@"
+}
+
+cmd_lint() {
+  echo "Running Rubocop linting..."
+  bundle exec rubocop "$@"
+}
+
+cmd_db_reset() {
+  echo "Resetting database..."
+  bundle exec rails db:drop db:create db:migrate db:seed
+}
+
+cmd_db_migrate() {
+  echo "Running database migrations..."
+  bundle exec rails db:migrate "$@"
+}
+
+cmd_db_seed() {
+  echo "Seeding database..."
+  bundle exec rails db:seed
+}
+
+cmd_deps() {
+  echo "Installing dependencies..."
+  bundle install
+  
+  # Install yarn dependencies if package.json exists
+  if [ -f package.json ]; then
+    echo "Installing yarn packages..."
+    yarn install
+  fi
+}
+
+cmd_routes() {
+  echo "Listing routes..."
+  bundle exec rails routes
+}
+
+# Command routing
+case "$1" in
+  server)
+    cmd_server
+    ;;
+  console)
+    cmd_console
+    ;;
+  test)
+    shift
+    cmd_test "$@"
+    ;;
+  lint)
+    shift
+    cmd_lint "$@"
+    ;;
+  db:reset)
+    cmd_db_reset
+    ;;
+  db:migrate)
+    shift
+    cmd_db_migrate "$@"
+    ;;
+  db:seed)
+    cmd_db_seed
+    ;;
+  deps)
+    cmd_deps
+    ;;
+  routes)
+    cmd_routes
+    ;;
+  help|"")
+    show_help
+    ;;
+  *)
+    echo "Unknown command: $1"
+    echo ""
+    show_help
+    exit 1
+    ;;
+esac
+
+exit 0 

@@ -1,0 +1,97 @@
+#!/bin/bash
+
+# Script to rename the Rails starter kit project
+# Usage: bin/rename-project new_app_name NewAppName
+
+set -e
+
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 new_app_name NewAppName"
+  echo "  - new_app_name: lowercase with underscores (e.g., my_app)"
+  echo "  - NewAppName: PascalCase for Ruby module name (e.g., MyApp)"
+  exit 1
+fi
+
+NEW_APP_NAME="$1"
+NEW_MODULE_NAME="$2"
+
+# Define all possible current names to replace
+CURRENT_APP_NAMES=("rails_starter_kit" "rails_starter")
+CURRENT_MODULE_NAMES=("RailsStarterKit" "RailsStarter")
+
+echo "Renaming project to $NEW_APP_NAME..."
+
+# Validate inputs
+if [[ ! "$NEW_APP_NAME" =~ ^[a-z][a-z0-9_]*$ ]]; then
+  echo "Error: new_app_name must be lowercase with underscores only"
+  exit 1
+fi
+
+if [[ ! "$NEW_MODULE_NAME" =~ ^[A-Z][a-zA-Z0-9]*$ ]]; then
+  echo "Error: NewAppName must be in PascalCase"
+  exit 1
+fi
+
+# Replace all variations of app names in file contents
+for CURRENT_APP_NAME in "${CURRENT_APP_NAMES[@]}"; do
+  echo "Replacing $CURRENT_APP_NAME with $NEW_APP_NAME..."
+  find . -type f -not -path "./bin/rename-project" -not -path "./.git/*" -not -path "./tmp/*" -not -path "./log/*" -not -path "./node_modules/*" -exec sed -i "s/$CURRENT_APP_NAME/$NEW_APP_NAME/g" {} \;
+done
+
+# Replace all variations of module names in file contents
+for CURRENT_MODULE_NAME in "${CURRENT_MODULE_NAMES[@]}"; do
+  echo "Replacing $CURRENT_MODULE_NAME with $NEW_MODULE_NAME..."
+  find . -type f -not -path "./bin/rename-project" -not -path "./.git/*" -not -path "./tmp/*" -not -path "./log/*" -not -path "./node_modules/*" -exec sed -i "s/$CURRENT_MODULE_NAME/$NEW_MODULE_NAME/g" {} \;
+done
+
+# Update database.yml for all possible database name variations
+for CURRENT_APP_NAME in "${CURRENT_APP_NAMES[@]}"; do
+  sed -i "s/${CURRENT_APP_NAME}_development/${NEW_APP_NAME}_development/g" config/database.yml
+  sed -i "s/${CURRENT_APP_NAME}_test/${NEW_APP_NAME}_test/g" config/database.yml
+  sed -i "s/${CURRENT_APP_NAME}_production/${NEW_APP_NAME}_production/g" config/database.yml
+done
+
+# Update application.rb for all possible module name variations
+for CURRENT_MODULE_NAME in "${CURRENT_MODULE_NAMES[@]}"; do
+  sed -i "s/module $CURRENT_MODULE_NAME/module $NEW_MODULE_NAME/g" config/application.rb
+done
+
+# Update app name in package.json if it exists
+if [ -f package.json ]; then
+  for CURRENT_APP_NAME in "${CURRENT_APP_NAMES[@]}"; do
+    sed -i "s/\"name\": \"$CURRENT_APP_NAME\"/\"name\": \"$NEW_APP_NAME\"/g" package.json
+  done
+fi
+
+echo "Project renamed to $NEW_APP_NAME successfully!"
+
+# Ask about initializing a new git repository
+read -p "Initialize a new git repository? (y/n): " init_git
+if [[ "$init_git" =~ ^[Yy]$ ]]; then
+  rm -rf .git
+  git init
+  git add .
+  git commit -m "Initial commit of $NEW_APP_NAME"
+  echo "New git repository initialized!"
+else
+  echo "Skipping git repository initialization."
+fi
+
+echo "======================================================"
+echo "Next steps:"
+echo "1. Update database configuration in .env file"
+echo "2. Run 'bundle install' to install dependencies"
+echo "3. Run 'rails db:create db:migrate' to set up the database"
+echo "4. Start the server with './run server'"
+echo "======================================================"
+
+# Make this script delete itself
+chmod +x "$0"
+echo "Would you like to delete this script? It's no longer needed. (y/n): "
+read delete_script
+if [[ "$delete_script" =~ ^[Yy]$ ]]; then
+  rm -- "$0"
+  echo "Script deleted."
+fi
+
+exit 0 
