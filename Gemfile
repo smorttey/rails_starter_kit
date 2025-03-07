@@ -49,7 +49,7 @@ gem "devise", "~> 4.9"
 gem "dotenv-rails", "~> 3.0"
 
 # Frontend tools
-gem "tailwindcss-rails", "~> 3.3"
+gem "tailwindcss-rails", "~> 4.2"
 gem "foreman"
 
 group :development, :test do
