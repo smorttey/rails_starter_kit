@@ -73,7 +73,7 @@ group :development do
   gem "web-console"
 
   # Code quality
-  gem "rubocop", "~> 1.60"
+  gem "rubocop", "~> 1.74"
   gem "rubocop-rails", "~> 2.24"
   gem "rubocop-rspec", "~> 3.5"
 end
