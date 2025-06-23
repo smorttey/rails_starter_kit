@@ -46,7 +46,7 @@ gem "thruster", require: false
 gem "devise", "~> 4.9"
 
 # Environment variables management
-gem "dotenv-rails", "~> 3.0"
+gem "dotenv-rails", "~> 3.1"
 
 # Frontend tools
 gem "tailwindcss-rails", "~> 3.3"
