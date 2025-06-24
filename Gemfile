@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.3.6"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.1"
+gem "rails", "~> 8.0.2"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use postgresql as the database for Active Record
@@ -46,7 +46,7 @@ gem "thruster", require: false
 gem "devise", "~> 4.9"
 
 # Environment variables management
-gem "dotenv-rails", "~> 3.0"
+gem "dotenv-rails", "~> 3.1"
 
 # Frontend tools
 gem "tailwindcss-rails", "~> 3.3"
@@ -63,7 +63,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # Testing framework
-  gem "rspec-rails", "~> 7.1"
+  gem "rspec-rails", "~> 8.0"
   gem "factory_bot_rails", "~> 6.4"
   gem "faker", "~> 3.2"
 end
@@ -73,9 +73,9 @@ group :development do
   gem "web-console"
 
   # Code quality
-  gem "rubocop", "~> 1.60"
-  gem "rubocop-rails", "~> 2.24"
-  gem "rubocop-rspec", "~> 3.5"
+  gem "rubocop", "~> 1.77"
+  gem "rubocop-rails", "~> 2.31"
+  gem "rubocop-rspec", "~> 3.6"
 end
 
 group :test do
