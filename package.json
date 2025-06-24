@@ -1,0 +1,15 @@
+{
+  "name": "rails_starter_kit",
+  "version": "1.0.0",
+  "description": "This is a customized Ruby on Rails starter project based on Rails 8.0.1 and Ruby 3.3.6. It includes various pre-configurations to accelerate new project setup.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
