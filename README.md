@@ -104,7 +104,7 @@ This starter project includes the following customizations beyond a standard Rai
 - **Ruby Version**: 3.3.6
 - **Rails Version**: 8.0.1
 - Uses Propshaft as the modern asset pipeline
-- Configured with TailwindCSS for styling
+- Configured with Tailwind CSS for styling
 
 ### Database
 - PostgreSQL configured as the default database
@@ -121,7 +121,7 @@ This starter project includes the following customizations beyond a standard Rai
 - Mobile-responsive landing page with feature overview
 - Dashboard view for authenticated users
 - About and Contact static pages
-- TailwindCSS components and layouts
+- Tailwind CSS components and layouts
 - Interactive dropdown menu with JavaScript
 - SVG icons and modern design elements
 
