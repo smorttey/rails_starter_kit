@@ -18,7 +18,7 @@ show_help() {
   echo "  db:reset    - Reset the database (drop, create, migrate, seed)"
   echo "  db:migrate  - Run database migrations"
   echo "  db:seed     - Seed the database"
-  echo "  deps        - Install all dependencies (bundle, yarn)"
+  echo "  deps        - Install all dependencies (bundle, npm)"
   echo "  routes      - List all routes"
   echo "  help        - Show this help message"
   echo ""
