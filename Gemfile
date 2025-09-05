@@ -75,7 +75,7 @@ group :development do
   # Code quality
   gem "rubocop", "~> 1.79"
   gem "rubocop-rails", "~> 2.32"
-  gem "rubocop-rspec", "~> 3.6"
+  gem "rubocop-rspec", "~> 3.7"
 end
 
 group :test do
