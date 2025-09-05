@@ -321,7 +321,7 @@ GEM
       lint_roller (~> 1.1)
       rubocop (>= 1.72.1, < 2.0)
       rubocop-ast (>= 1.38.0, < 2.0)
-    rubocop-rails (2.32.0)
+    rubocop-rails (2.33.3)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
       rack (>= 1.1)
@@ -441,7 +441,7 @@ DEPENDENCIES
   rails (~> 8.0.2)
   rspec-rails (~> 8.0)
   rubocop (~> 1.79)
-  rubocop-rails (~> 2.32)
+  rubocop-rails (~> 2.33)
   rubocop-rails-omakase
   rubocop-rspec (~> 3.7)
   selenium-webdriver
